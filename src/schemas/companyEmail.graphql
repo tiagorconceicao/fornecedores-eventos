@@ -10,7 +10,7 @@ type Mutation {
   ): CompanyEmail
 
   updateCompanyEmail(
-    company_id: ID!, company_email_id: ID!
+    company_id: ID!, company_email_id: ID!,
     email: String, title: String, description: String
   ): CompanyEmail
 
