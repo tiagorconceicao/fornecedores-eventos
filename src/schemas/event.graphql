@@ -1,0 +1,19 @@
+type Query {
+  getEvents: [Event!]
+  getEvent(event_id: ID!): Event 
+}
+
+type Mutation {
+  createEvent(
+    name: String!, description: String, state: String, city: String,
+    date_start: String, date_end: String
+  ): Event
+
+  updateEvent(
+    event_id: ID!,
+    name: String, description: String, state: String, city: String,
+    date_start: String, date_end: String
+  ): Event
+
+  deleteEvent(event_id: ID!): Boolean
+}

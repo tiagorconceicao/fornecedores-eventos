@@ -1,0 +1,17 @@
+type Query {
+  getServiceFields: [ServiceField!]
+  getServiceField(service_field_id: ID!): ServiceField 
+}
+
+type Mutation {
+  createServiceField(
+    name: String!, description: String
+  ): ServiceField
+
+  updateServiceField(
+    service_field_id: ID!,
+    name: String, description: String
+  ): ServiceField
+
+  deleteServiceField(service_field_id: ID!): Boolean
+}

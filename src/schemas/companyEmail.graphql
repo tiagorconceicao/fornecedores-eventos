@@ -1,0 +1,18 @@
+type Query {
+  getCompanyEmails(company_id: ID!): [CompanyEmail!]
+  getCompanyEmail(company_id: ID!, company_email_id: ID!): CompanyEmail 
+}
+
+type Mutation {
+  createCompanyEmail(
+    company_id: ID!,
+    email: String!, title: String, description: String
+  ): CompanyEmail
+
+  updateCompanyEmail(
+    company_id: ID!, company_email_id: ID!
+    email: String, title: String, description: String
+  ): CompanyEmail
+
+  deleteCompanyEmail(company_id: ID!, company_email_id: ID!): Boolean
+}

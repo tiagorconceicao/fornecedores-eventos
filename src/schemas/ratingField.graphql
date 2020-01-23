@@ -1,0 +1,17 @@
+type Query {
+  getRatingFields: [RatingField!]
+  getRatingField(rating_field_id: ID!): RatingField 
+}
+
+type Mutation {
+  createRatingField(
+    name: String!, description: String
+  ): RatingField
+
+  updateRatingField(
+    rating_field_id: ID!,
+    name: String, description: String
+  ): RatingField
+
+  deleteRatingField(rating_field_id: ID!): Boolean
+}

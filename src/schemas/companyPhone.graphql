@@ -1,0 +1,18 @@
+type Query {
+  getCompanyPhones(company_id: ID!): [CompanyPhone!]
+  getCompanyPhone(company_id: ID!, company_phone_id: ID!): CompanyPhone 
+}
+
+type Mutation {
+  createCompanyPhone(
+    company_id: ID!,
+    phone: String!, title: String, description: String
+  ): CompanyPhone
+
+  updateCompanyPhone(
+    company_id: ID!, company_phone_id: ID!
+    phone: String, title: String, description: String
+  ): CompanyPhone
+
+  deleteCompanyPhone(company_id: ID!, company_phone_id: ID!): Boolean
+}

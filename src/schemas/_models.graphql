@@ -1,0 +1,49 @@
+type Event {
+  id: ID!
+  name: String!
+  description: String
+  state: String
+  city: String
+  date_start: String,
+  date_end: String,
+}
+
+type ServiceField {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type RatingField {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Company {
+  id: ID!
+  name: String!
+  description: String
+  zipcode: String
+  state: String
+  city: String
+  district: String
+  street: String
+  number: String
+  complement: String
+}
+
+type CompanyPhone {
+  id: ID!
+  phone: String!
+  title: String
+  description: String
+}
+
+type CompanyEmail {
+  id: ID!
+  email: String!
+  title: String
+  description: String
+}
+
