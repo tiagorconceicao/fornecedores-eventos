@@ -47,3 +47,10 @@ type CompanyEmail {
   description: String
 }
 
+type CompanyLocation {
+  id: ID!
+  company_id: ID!
+  state: String!
+  city: String!
+}
+
