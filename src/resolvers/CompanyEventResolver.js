@@ -1,5 +1,6 @@
 const Company = require("../models/Company");
 const Event = require("../models/Event");
+const CompanyEvent = require("../models/CompanyEvent");
 
 const CompanyEventResolver = {
   Query: {
@@ -7,7 +8,13 @@ const CompanyEventResolver = {
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
-      const foundCompanyEvents = await foundCompany.getEvents();
+      const foundCompanyEvents = await Event.findAll({
+        include: {
+          association:'companies',
+          where: { company_id }
+        }
+      });
+
       return foundCompanyEvents;
     },
   },
@@ -20,10 +27,12 @@ const CompanyEventResolver = {
       foundEvent = await Event.findByPk(event_id);
       if (!foundEvent) { throw new Error("Event not found"); }
 
-      checkCompanyEvent = await foundCompany.hasEvent(foundEvent);
-      if (checkCompanyEvent) { throw new Error("Association already exists"); }
+      foundCompanyEvent = await CompanyEvent.findOne({ where: {company_id, event_id} });
+      if (foundCompanyEvent) { throw new Error("Association already exists"); }
 
-      const addCompanyEvent = await foundCompany.addEvent(foundEvent);
+      const addCompanyEvent = await CompanyEvent.create({
+        company_id, event_id
+      });
       if (!addCompanyEvent) { throw new Error("Unexpected error"); }
       return true;
     },
@@ -35,10 +44,10 @@ const CompanyEventResolver = {
       foundEvent = await Event.findByPk(event_id);
       if (!foundEvent) { throw new Error("Event not found"); }
 
-      checkCompanyEvent = await foundCompany.hasEvent(foundEvent);
-      if (!checkCompanyEvent) { throw new Error("Association not exists"); }
+      foundCompanyEvent = await CompanyEvent.findOne({ where: {company_id, event_id} });
+      if (!foundCompanyEvent) { throw new Error("Association not exists"); }
 
-      const removeCompanyEvent = await foundCompany.removeEvent(foundEvent);
+      const removeCompanyEvent = await foundCompanyEvent.destroy();
       if (!removeCompanyEvent) { throw new Error("Unexpected error"); }
       return true;
     },

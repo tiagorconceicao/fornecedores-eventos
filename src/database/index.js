@@ -10,6 +10,7 @@ const Company = require('../models/Company');
 const CompanyPhone = require('../models/CompanyPhone');
 const CompanyEmail = require('../models/CompanyEmail');
 const CompanyLocation = require('../models/CompanyLocation');
+const CompanyEvent = require('../models/CompanyEvent');
 
 // Start Connections
 Event.init(dbConnection);
@@ -19,6 +20,7 @@ Company.init(dbConnection);
 CompanyPhone.init(dbConnection);
 CompanyEmail.init(dbConnection);
 CompanyLocation.init(dbConnection);
+CompanyEvent.init(dbConnection);
 
 // Start Associations
 Event.associate(dbConnection.models);
@@ -28,5 +30,6 @@ Company.associate(dbConnection.models);
 CompanyPhone.associate(dbConnection.models);
 CompanyEmail.associate(dbConnection.models);
 CompanyLocation.associate(dbConnection.models);
+CompanyEvent.associate(dbConnection.models);
 
 module.exports = dbConnection;
