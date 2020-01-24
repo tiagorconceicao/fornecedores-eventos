@@ -16,7 +16,7 @@ class Event extends Model {
   }
 
   static associate(models) {
-    //this.belongsToMany(models.Company, { foreignKey: 'event_id', through: 'company_event' , as: 'companies' } );
+    this.belongsToMany(models.Company, { foreignKey: 'event_id', through: 'company_event' , as: 'companies' } );
   }
 
 }
