@@ -1,0 +1,17 @@
+type Query {
+  getCompanyLocations(company_id: ID!): [CompanyLocation!]
+  getCompanyLocation(company_id: ID!, company_location_id: ID!): CompanyLocation 
+}
+
+type Mutation {
+  createCompanyLocation(
+    company_id: ID!, state: String!, city: String!
+  ): CompanyLocation
+
+  updateCompanyLocation(
+    company_id: ID!, company_location_id: ID!,
+    state: String, city: String
+  ): CompanyLocation
+
+  deleteCompanyLocation(company_id: ID!, company_location_id: ID!): Boolean
+}

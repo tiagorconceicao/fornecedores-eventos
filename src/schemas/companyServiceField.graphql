@@ -1,0 +1,8 @@
+type Query {
+  getCompanyServices(company_id: ID!): [ServiceField!]
+}
+
+type Mutation {
+  addCompanyService(company_id: ID!, service_field_id: ID!): Boolean
+  deleteCompanyService(company_id: ID!, service_field_id: ID!): Boolean
+}

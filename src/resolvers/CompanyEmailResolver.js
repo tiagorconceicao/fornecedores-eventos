@@ -1,60 +1,81 @@
 const Company = require("../models/Company");
+const CompanyEmail = require("../models/CompanyEmail");
 
 const CompanyEmailResolver = {
   Query: {
-    getCompanyEmails: async () => {
-      return await Company.findAll();
-    },
-
-    getCompanyEmail: async (_,{ company_id }) => {
+    getCompanyEmails: async (_,{ company_id }) => {
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
-      return foundCompany;
+
+      const foundCompanyEmails = await CompanyEmail.findAll({
+        where:{ company_id },      
+      });
+
+      return foundCompanyEmails;
+    },
+
+    getCompanyEmail: async (_,{ company_id, company_email_id }) => {
+      foundCompany = await Company.findByPk(company_id);
+      if (!foundCompany) { throw new Error("Company not found"); }
+
+      const foundCompanyEmail = await CompanyEmail.findOne({
+        where:{ id:company_email_id, company_id },      
+      });
+      if (!foundCompanyEmail) { throw new Error("CompanyEmail not found"); }
+
+      return foundCompanyEmail;
     },
   },
 
   Mutation: {
-    createCompanyEmail: async (_,{ name, description, zipcode, state, city, district, street, number, complement }) => {
-      const existsCompany = await Company.findOne({ where: { name } });
-      if ( existsCompany ) {
-        throw new Error("Company 'NAME' already used");
+    createCompanyEmail: async (_,{ company_id, email, title, description }) => {
+      foundCompany = await Company.findByPk(company_id);
+      if (!foundCompany) { throw new Error("Company not found"); }
+
+      const existsCompanyEmail = await CompanyEmail.findOne({ where: { email, company_id } });
+      if ( existsCompanyEmail ) {
+        throw new Error("CompanyEmail 'EMAIL' already exists");
       }
 
-      const createdCompany = await Company.create({
-        name, description, zipcode, state, city,
-        district, street, number, complement
+      const createdCompanyEmail = await CompanyEmail.create({
+        company_id, email, title, description
       });
-      return await Company.findByPk(createdCompany.id);
+      return await CompanyEmail.findByPk(createdCompanyEmail.id);
     },
 
-    updateCompanyEmail: async (_,{ company_id, name, description, zipcode, state, city, district, street, number, complement }) => {      
+    updateCompanyEmail: async (_,{ company_id, company_email_id, email, title, description }) => {      
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
-      if (foundCompany.name != name) {
-        const existsCompany = await Company.findOne({ where: { name } });
-        if ( existsCompany ) {
-          throw new Error("Company 'NAME' already used");
+      foundCompanyEmail = await CompanyEmail.findOne({ where: { id:company_email_id, company_id } });
+      if (!foundCompanyEmail) { throw new Error("CompanyEmail not found"); }
+
+      if (foundCompanyEmail.email != email) {
+        const existsCompanyEmail = await CompanyEmail.findOne({ where: { email, company_id } });
+        if ( existsCompanyEmail ) {
+          throw new Error("CompanyEmail 'EMAIL' already used");
         }
-      }    
+      }
 
-      const updatedCompany = await Company.update({
-        name, description, zipcode, state,
-        city, district, street, number, complement
+      const updatedCompanyEmail = await CompanyEmail.update({
+        email, title, description
       },{
-        where: {id:company_id}
+        where: { id:company_email_id, company_id }
       })
-      if (!updatedCompany) { throw new Error("Unexpected error"); }
-      return await Company.findByPk(company_id);
+      if (!updatedCompanyEmail) { throw new Error("Unexpected error"); }
+      return await CompanyEmail.findByPk(company_email_id);
     },
 
-    deleteCompanyEmail: async (_,{ company_id }) => {      
+    deleteCompanyEmail: async (_,{ company_id, company_email_id }) => {      
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
-      const deleteCompany = await Company.destroy({ where: { id:company_id } });
+      foundCompanyEmail = await CompanyEmail.findOne({ where: { id:company_email_id, company_id } });
+      if (!foundCompanyEmail) { throw new Error("CompanyEmail not found"); }
 
-      if (!deleteCompany) { throw new Error("Unexpected error"); }
+      const deleteCompanyEmail = await CompanyEmail.destroy({ where: { id:company_email_id, company_id } });
+
+      if (!deleteCompanyEmail) { throw new Error("Unexpected error"); }
       return true;
     },
   }
