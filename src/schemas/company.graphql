@@ -5,14 +5,14 @@ type Query {
 
 type Mutation {
   createCompany(
-    name: String!, description: String, zipcode: String, state: String, city: String,
-    district: String, street: String, number: String, complement: String
+    name: String!, description: String, website: String, zipcode: String, state: String,
+    city: String, district: String, street: String, number: String, complement: String
   ): Company
 
   updateCompany(
     company_id: ID!,
-    name: String, description: String, zipcode: String, state: String, city: String,
-    district: String, street: String, number: String, complement: String
+    name: String, description: String, website: String, zipcode: String, state: String,
+    city: String, district: String, street: String, number: String, complement: String
   ): Company
 
   deleteCompany(company_id: ID!): Boolean

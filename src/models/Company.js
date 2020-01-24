@@ -5,6 +5,7 @@ class Company extends Model {
     super.init({
       name: DataTypes.STRING,
       description: DataTypes.STRING,
+      website: DataTypes.STRING,
       zipcode: DataTypes.STRING,
       state: DataTypes.STRING,
       city: DataTypes.STRING,
