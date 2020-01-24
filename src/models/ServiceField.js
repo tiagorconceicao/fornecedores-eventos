@@ -12,7 +12,7 @@ class ServiceField extends Model {
   }
 
   static associate(models) {
-    //this.belongsToMany(models.Company, { foreignKey: 'service_field_id', through: 'company_service_field' , as: 'companies' } );
+    this.belongsToMany(models.Company, { foreignKey: 'service_field_id', through: 'company_service_field' , as: 'companies' } );
   }
 
 }
