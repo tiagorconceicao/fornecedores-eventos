@@ -57,3 +57,17 @@ type CompanyLocation {
   city: String!
 }
 
+type CompanyEvent {
+  id: ID!
+  company_id: ID!
+  event_id: ID!
+}
+
+type CompanyEventRating {
+  id: ID!
+  rating_field: RatingField!
+  company_event: CompanyEvent!
+  score: Int!
+  comment: String
+}
+

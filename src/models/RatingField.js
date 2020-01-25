@@ -12,7 +12,7 @@ class RatingField extends Model {
   }
 
   static associate(models) {
-    //this.belongsToMany(models.Company, { foreignKey: 'event_id', through: 'company_event' , as: 'companies' } );
+    this.hasMany(models.CompanyEventRating, { foreignKey: 'rating_field_id', as: 'company_event_ratings' });
   }
 
 }

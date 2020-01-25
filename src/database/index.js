@@ -11,6 +11,7 @@ const CompanyPhone = require('../models/CompanyPhone');
 const CompanyEmail = require('../models/CompanyEmail');
 const CompanyLocation = require('../models/CompanyLocation');
 const CompanyEvent = require('../models/CompanyEvent');
+const CompanyEventRating = require('../models/CompanyEventRating');
 
 // Start Connections
 Event.init(dbConnection);
@@ -21,6 +22,7 @@ CompanyPhone.init(dbConnection);
 CompanyEmail.init(dbConnection);
 CompanyLocation.init(dbConnection);
 CompanyEvent.init(dbConnection);
+CompanyEventRating.init(dbConnection);
 
 // Start Associations
 Event.associate(dbConnection.models);
@@ -31,5 +33,6 @@ CompanyPhone.associate(dbConnection.models);
 CompanyEmail.associate(dbConnection.models);
 CompanyLocation.associate(dbConnection.models);
 CompanyEvent.associate(dbConnection.models);
+CompanyEventRating.associate(dbConnection.models);
 
 module.exports = dbConnection;
