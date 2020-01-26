@@ -6,11 +6,15 @@ const { CompanyPhoneResolver } = require('./CompanyPhoneResolver');
 const { CompanyEmailResolver } = require('./CompanyEmailResolver');
 const { CompanyLocationResolver } = require('./CompanyLocationResolver');
 const { CompanyServiceFieldResolver } = require('./CompanyServiceFieldResolver');
+const { CompanyEventResolver } = require('./CompanyEventResolver');
+const { CompanyEventRatingResolver } = require('./CompanyEventRatingResolver');
+const { CompanyMessageResolver } = require('./CompanyMessageResolver');
 
 const resolvers = [
   EventResolver, ServiceFieldResolver, RatingFieldResolver,
   CompanyResolver, CompanyPhoneResolver, CompanyEmailResolver,
-  CompanyLocationResolver, CompanyServiceFieldResolver
+  CompanyLocationResolver, CompanyServiceFieldResolver, CompanyEventResolver,
+  CompanyEventRatingResolver, CompanyMessageResolver
 ];
 
 module.exports = {

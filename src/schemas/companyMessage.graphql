@@ -1,0 +1,18 @@
+type Query {
+  getCompanyMessages(company_id: ID!): [CompanyMessage!]
+  getCompanyMessage(company_id: ID!, company_message_id: ID!): CompanyMessage 
+}
+
+type Mutation {
+  createCompanyMessage(
+    company_id: ID!,
+    title: String, message: String!, fixed: Boolean
+  ): CompanyMessage
+
+  updateCompanyMessage(
+    company_id: ID!, company_message_id: ID!,
+    title: String, message: String, fixed: Boolean
+  ): CompanyMessage
+
+  deleteCompanyMessage(company_id: ID!, company_message_id: ID!): Boolean
+}

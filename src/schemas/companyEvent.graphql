@@ -1,0 +1,8 @@
+type Query {
+  getCompanyEvents(company_id: ID!): [Event!]
+}
+
+type Mutation {
+  addCompanyEvent(company_id: ID!, event_id: ID!): Boolean
+  deleteCompanyEvent(company_id: ID!, event_id: ID!): Boolean
+}

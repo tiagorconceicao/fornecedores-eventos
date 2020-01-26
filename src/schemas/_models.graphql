@@ -24,6 +24,7 @@ type Company {
   id: ID!
   name: String!
   description: String
+  website: String
   zipcode: String
   state: String
   city: String
@@ -54,5 +55,29 @@ type CompanyLocation {
   company_id: ID!
   state: String!
   city: String!
+}
+
+type CompanyEvent {
+  id: ID!
+  company_id: ID!
+  event_id: ID!
+}
+
+type CompanyEventRating {
+  id: ID!
+  rating_field: RatingField!
+  company_event: CompanyEvent!
+  score: Int!
+  comment: String
+}
+
+type CompanyMessage {
+  id: ID!
+  company_id: ID!
+  title: String
+  message: String!
+  fixed: Boolean
+  created_at: String
+  updated_at: String
 }
 
