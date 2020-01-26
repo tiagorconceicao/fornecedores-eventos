@@ -71,3 +71,13 @@ type CompanyEventRating {
   comment: String
 }
 
+type CompanyMessage {
+  id: ID!
+  company_id: ID!
+  title: String
+  message: String!
+  fixed: Boolean
+  created_at: String
+  updated_at: String
+}
+

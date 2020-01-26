@@ -25,6 +25,7 @@ class Company extends Model {
     this.hasMany(models.CompanyLocation, { foreignKey: 'company_id', as: 'locations' });
     this.belongsToMany(models.ServiceField, { foreignKey: 'company_id', through: 'company_service_field' , as: 'service_fields' } );
     this.hasMany(models.CompanyEvent, { foreignKey: 'company_id', as: 'events' });
+    this.hasMany(models.CompanyMessage, { foreignKey: 'company_id', as: 'messages' });
   }
 
 }
