@@ -81,3 +81,12 @@ type CompanyMessage {
   updated_at: String
 }
 
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  active: Boolean
+  admin: Boolean
+  created_at: String
+  updated_at: String
+}

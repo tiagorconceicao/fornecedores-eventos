@@ -9,8 +9,10 @@ const { CompanyServiceFieldResolver } = require('./CompanyServiceFieldResolver')
 const { CompanyEventResolver } = require('./CompanyEventResolver');
 const { CompanyEventRatingResolver } = require('./CompanyEventRatingResolver');
 const { CompanyMessageResolver } = require('./CompanyMessageResolver');
+const { UserResolver } = require('./UserResolver');
 
 const resolvers = [
+  UserResolver,
   EventResolver, ServiceFieldResolver, RatingFieldResolver,
   CompanyResolver, CompanyPhoneResolver, CompanyEmailResolver,
   CompanyLocationResolver, CompanyServiceFieldResolver, CompanyEventResolver,

@@ -3,6 +3,7 @@ const dbConfig = require('../config/database');
 const dbConnection = new Sequelize(dbConfig);
 
 // Load Models
+const User = require('../models/User');
 const Event = require('../models/Event');
 const ServiceField = require('../models/ServiceField');
 const RatingField = require('../models/RatingField');
@@ -15,6 +16,7 @@ const CompanyEventRating = require('../models/CompanyEventRating');
 const CompanyMessage = require('../models/CompanyMessage');
 
 // Start Connections
+User.init(dbConnection);
 Event.init(dbConnection);
 ServiceField.init(dbConnection);
 RatingField.init(dbConnection);
@@ -27,6 +29,7 @@ CompanyEventRating.init(dbConnection);
 CompanyMessage.init(dbConnection);
 
 // Start Associations
+User.associate(dbConnection.models);
 Event.associate(dbConnection.models);
 ServiceField.associate(dbConnection.models);
 RatingField.associate(dbConnection.models);
