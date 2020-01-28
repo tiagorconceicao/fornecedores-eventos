@@ -1,0 +1,8 @@
+type AuthToken {
+  token: String,
+  user: User
+}
+
+type Mutation {
+  authenticate(email: String!, password: String!): AuthToken
+}

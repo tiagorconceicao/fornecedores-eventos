@@ -10,9 +10,11 @@
     "@graphql-modules/epoxy": "^0.4.0",
     "@graphql-modules/sonar": "^0.4.0",
     "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "graphql": "^14.5.8",
     "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.3"
   },
