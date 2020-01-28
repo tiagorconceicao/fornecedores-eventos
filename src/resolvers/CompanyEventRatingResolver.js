@@ -1,3 +1,4 @@
+const { validateToken } = require("../middlewares/authentication");
 const Company = require("../models/Company");
 const Event = require("../models/Event");
 const RatingField = require("../models/RatingField");

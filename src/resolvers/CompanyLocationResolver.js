@@ -1,3 +1,4 @@
+const { validateToken } = require("../middlewares/authentication");
 const Company = require("../models/Company");
 const CompanyLocation = require("../models/CompanyLocation");
 
@@ -34,7 +35,8 @@ const estados = [
 
 const CompanyLocationResolver = {
   Query: {
-    getCompanyLocations: async (_,{ company_id }) => {
+    getCompanyLocations: async (_,{ company_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -45,7 +47,8 @@ const CompanyLocationResolver = {
       return foundCompanyLocations;
     },
 
-    getCompanyLocation: async (_,{ company_id, company_location_id }) => {
+    getCompanyLocation: async (_,{ company_id, company_location_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -59,7 +62,8 @@ const CompanyLocationResolver = {
   },
 
   Mutation: {
-    createCompanyLocation: async (_,{ company_id, state, city }) => {
+    createCompanyLocation: async (_,{ company_id, state, city },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -78,7 +82,8 @@ const CompanyLocationResolver = {
       return await CompanyLocation.findByPk(createdCompanyLocation.id);
     },
 
-    updateCompanyLocation: async (_,{ company_id, company_location_id, state, city }) => {      
+    updateCompanyLocation: async (_,{ company_id, company_location_id, state, city },{token}) => {
+      validateToken(token);    
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -105,7 +110,8 @@ const CompanyLocationResolver = {
       return await CompanyLocation.findByPk(company_location_id);
     },
 
-    deleteCompanyLocation: async (_,{ company_id, company_location_id }) => {      
+    deleteCompanyLocation: async (_,{ company_id, company_location_id },{token}) => {
+      validateToken(token);   
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 

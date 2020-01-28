@@ -11,7 +11,7 @@ require('./database/index');
 const app = new GraphQLServer({
   typeDefs: mergeGraphQLSchemas(loadSchemaFiles(__dirname + "/schemas/")),
   resolvers,
-  context: req => ({ token : req.request.get('Authentication') })
+  context: req => ({ token : req.request.get('authorization') })
 });
 
 app.use( cors() );

@@ -1,12 +1,15 @@
+const { validateToken } = require("../middlewares/authentication");
 const User = require("../models/User");
 
 const UserResolver = {
   Query: {
-    getUsers: async () => {
+    getUsers: async (_,{},{token}) => {
+      validateToken(token);
       return await User.findAll();
     },
 
-    getUser: async (_,{ user_id }) => {
+    getUser: async (_,{ user_id },{token}) => {
+      validateToken(token);
       foundUser = await User.findByPk(user_id);
       if (!foundUser) { throw new Error("User not found"); }
       return foundUser;
@@ -14,7 +17,10 @@ const UserResolver = {
   },
 
   Mutation: {
-    createUser: async (_,{ name, email, password }) => {
+    createUser: async (_,{ name, email, password },{token}) => {
+      const decoded = validateToken(token);
+      userIsAdmin = await User.findOne({ where: { id: decoded.id, admin: true, } });
+      if (!userIsAdmin) { throw new Error("Only ADMIN allowed"); }
 
       // check email format
       // check password format
@@ -30,9 +36,11 @@ const UserResolver = {
       return await User.findByPk(createdUser.id);
     },
 
-    updateUser: async (_,{ user_id, name, email, password }) => {
+    updateUser: async (_,{ user_id, name, email, password },{token}) => {
+      const decoded = validateToken(token);
+      userIsAdmin = await User.findOne({ where: { id: decoded.id, admin: true, } });
+      if ( !userIsAdmin && (user_id!=decoded.id) ) { throw new Error("Only ADMIN or OWN USER allowed"); }
       
-      // check user token is from same user_id or ADMIN
       // check email format
       // check password format
 
@@ -55,8 +63,12 @@ const UserResolver = {
       return await User.findByPk(user_id);
     },
 
-    deleteUser: async (_,{ user_id }) => {
-      // check user token is from same user_id or ADMIN      
+    deleteUser: async (_,{ user_id },{token}) => {
+      const decoded = validateToken(token);
+      userIsAdmin = await User.findOne({ where: { id: decoded.id, admin: true, } });
+      if (!userIsAdmin) { throw new Error("Only ADMIN allowed"); }
+      if (user_id == decoded.id) { throw new Error("You can't delete your own user"); }
+
       foundUser = await User.findByPk(user_id);
       if (!foundUser) { throw new Error("User not found"); }
 

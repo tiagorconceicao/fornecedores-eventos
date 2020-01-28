@@ -1,9 +1,11 @@
+const { validateToken } = require("../middlewares/authentication");
 const Company = require("../models/Company");
 const CompanyMessage = require("../models/CompanyMessage");
 
 const CompanyMessageResolver = {
   Query: {
-    getCompanyMessages: async (_,{ company_id }) => {
+    getCompanyMessages: async (_,{ company_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -14,7 +16,8 @@ const CompanyMessageResolver = {
       return foundCompanyMessages;
     },
 
-    getCompanyMessage: async (_,{ company_id, company_message_id }) => {
+    getCompanyMessage: async (_,{ company_id, company_message_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -28,7 +31,8 @@ const CompanyMessageResolver = {
   },
 
   Mutation: {
-    createCompanyMessage: async (_,{ company_id, title, message, fixed }) => {
+    createCompanyMessage: async (_,{ company_id, title, message, fixed },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -38,7 +42,8 @@ const CompanyMessageResolver = {
       return await CompanyMessage.findByPk(createdCompanyMessage.id);
     },
 
-    updateCompanyMessage: async (_,{ company_id, company_message_id, title, message, fixed }) => {      
+    updateCompanyMessage: async (_,{ company_id, company_message_id, title, message, fixed },{token}) => {
+      validateToken(token);    
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -54,7 +59,8 @@ const CompanyMessageResolver = {
       return await CompanyMessage.findByPk(company_message_id);
     },
 
-    deleteCompanyMessage: async (_,{ company_id, company_message_id }) => {      
+    deleteCompanyMessage: async (_,{ company_id, company_message_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 

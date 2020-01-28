@@ -1,5 +1,5 @@
-const Company = require("../models/Company");
 const { validateToken } = require("../middlewares/authentication");
+const Company = require("../models/Company");
 
 const CompanyResolver = {
   Query: {

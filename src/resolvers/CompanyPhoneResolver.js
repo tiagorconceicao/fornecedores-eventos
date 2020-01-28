@@ -1,9 +1,11 @@
+const { validateToken } = require("../middlewares/authentication");
 const Company = require("../models/Company");
 const CompanyPhone = require("../models/CompanyPhone");
 
 const CompanyPhoneResolver = {
   Query: {
-    getCompanyPhones: async (_,{ company_id }) => {
+    getCompanyPhones: async (_,{ company_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -14,7 +16,8 @@ const CompanyPhoneResolver = {
       return foundCompanyPhones;
     },
 
-    getCompanyPhone: async (_,{ company_id, company_phone_id }) => {
+    getCompanyPhone: async (_,{ company_id, company_phone_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -28,7 +31,8 @@ const CompanyPhoneResolver = {
   },
 
   Mutation: {
-    createCompanyPhone: async (_,{ company_id, phone, title, description }) => {
+    createCompanyPhone: async (_,{ company_id, phone, title, description },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -43,7 +47,8 @@ const CompanyPhoneResolver = {
       return await CompanyPhone.findByPk(createdCompanyPhone.id);
     },
 
-    updateCompanyPhone: async (_,{ company_id, company_phone_id, phone, title, description }) => {      
+    updateCompanyPhone: async (_,{ company_id, company_phone_id, phone, title, description },{token}) => {
+      validateToken(token);    
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -66,7 +71,8 @@ const CompanyPhoneResolver = {
       return await CompanyPhone.findByPk(company_phone_id);
     },
 
-    deleteCompanyPhone: async (_,{ company_id, company_phone_id }) => {      
+    deleteCompanyPhone: async (_,{ company_id, company_phone_id },{token}) => {
+      validateToken(token);   
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
