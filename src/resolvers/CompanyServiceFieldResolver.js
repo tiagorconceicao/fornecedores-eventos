@@ -1,9 +1,11 @@
+const { validateToken } = require("../middlewares/authentication");
 const Company = require("../models/Company");
 const ServiceField = require("../models/ServiceField");
 
 const CompanyServiceFieldResolver = {
   Query: {
-    getCompanyServices: async (_,{ company_id }) => {
+    getCompanyServices: async (_,{ company_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -13,7 +15,8 @@ const CompanyServiceFieldResolver = {
   },
 
   Mutation: {
-    addCompanyService: async (_,{ company_id, service_field_id }) => {
+    addCompanyService: async (_,{ company_id, service_field_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -28,7 +31,8 @@ const CompanyServiceFieldResolver = {
       return true;
     },
 
-    deleteCompanyService: async (_,{ company_id, service_field_id }) => {      
+    deleteCompanyService: async (_,{ company_id, service_field_id },{token}) => {
+      validateToken(token);  
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 

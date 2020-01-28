@@ -1,10 +1,12 @@
+const { validateToken } = require("../middlewares/authentication");
 const Company = require("../models/Company");
 const Event = require("../models/Event");
 const CompanyEvent = require("../models/CompanyEvent");
 
 const CompanyEventResolver = {
   Query: {
-    getCompanyEvents: async (_,{ company_id }) => {
+    getCompanyEvents: async (_,{ company_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -20,7 +22,8 @@ const CompanyEventResolver = {
   },
 
   Mutation: {
-    addCompanyEvent: async (_,{ company_id, event_id }) => {
+    addCompanyEvent: async (_,{ company_id, event_id },{token}) => {
+      validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 
@@ -37,7 +40,8 @@ const CompanyEventResolver = {
       return true;
     },
 
-    deleteCompanyEvent: async (_,{ company_id, event_id }) => {      
+    deleteCompanyEvent: async (_,{ company_id, event_id },{token}) => {
+      validateToken(token);    
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
 

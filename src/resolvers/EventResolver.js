@@ -1,13 +1,16 @@
+const { validateToken } = require("../middlewares/authentication");
 const Event = require("../models/Event");
 
 const EventResolver = {
   Query: {
 
-    getEvents: async () => {
+    getEvents: async (_,{},{token}) => {
+      validateToken(token);
       return await Event.findAll();
     },
 
-    getEvent: async (_,{ event_id }) => {
+    getEvent: async (_,{ event_id },{token}) => {
+      validateToken(token);
       foundEvent = await Event.findByPk(event_id);
       if (!foundEvent) { throw new Error("Event not found"); }
       return foundEvent;
@@ -16,7 +19,8 @@ const EventResolver = {
   },
 
   Mutation: {
-    createEvent: async (_,{ name, description, state, city, date_start, date_end }) => {
+    createEvent: async (_,{ name, description, state, city, date_start, date_end },{token}) => {
+      validateToken(token);
       const existsEvent = await Event.findOne({ where: { name } });
       if ( existsEvent ) {
         throw new Error("Event 'NAME' already used");
@@ -29,7 +33,8 @@ const EventResolver = {
       return await Event.findByPk(createdEvent.id);
     },
 
-    updateEvent: async (_,{ event_id, name, description, state, city, date_start, date_end }) => {      
+    updateEvent: async (_,{ event_id, name, description, state, city, date_start, date_end },{token}) => {
+      validateToken(token);   
       foundEvent = await Event.findByPk(event_id);
       if (!foundEvent) { throw new Error("Event not found"); }
 
@@ -50,7 +55,8 @@ const EventResolver = {
       return await Event.findByPk(event_id);
     },
 
-    deleteEvent: async (_,{ event_id }) => {      
+    deleteEvent: async (_,{ event_id },{token}) => {
+      validateToken(token);
       foundEvent = await Event.findByPk(event_id);
       if (!foundEvent) { throw new Error("Event not found"); }
 
