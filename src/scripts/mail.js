@@ -11,7 +11,7 @@ function sendSingleEmail ({ ToAddresses, CcAddresses, Subject, Html, Text, Reply
       },
       Subject: { Charset: 'UTF-8', Data: '' }
     },
-    Source: 'Tiago Ramos <tiago@planoaeventos.com.br>',
+    Source: process.env.AWS_SES_DEFAULT_SOURCE,
     ReplyToAddresses: [],
   };
 
