@@ -1,13 +1,13 @@
 var AWS = require ('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
 
-function sendSingleEmail ({ ToAddresses, CcAddresses, Subject, Html, Text, ReplyToAddresses, Source, SourceName }) {
+function sendSingleEmail ({ ToAddresses, CcAddresses, BccAddresses, Subject, Html, Text, ReplyToAddresses, Source, SourceName }) {
   var params = {
-    Destination: { ToAddresses: [], CcAddresses: [] },
+    Destination: { ToAddresses: [], CcAddresses: [], BccAddresses: [] },
     Message: {
       Body: {
-        Html: { Charset: "UTF-8", Data: "<p></p>" },
-        Text: { Charset: "UTF-8", Data: "" }
+        Html: { Charset: 'UTF-8', Data: '<p></p>' },
+        Text: { Charset: 'UTF-8', Data: '' }
       },
       Subject: { Charset: 'UTF-8', Data: '' }
     },
@@ -16,12 +16,14 @@ function sendSingleEmail ({ ToAddresses, CcAddresses, Subject, Html, Text, Reply
   };
 
   //Validações
-  if (!CcAddresses && !ToAddresses) { return false; }
-  if (!Html && !Text) { return false; }
+  if (!ToAddresses && !CcAddresses ) { console.log('Invalid Params'); return false; }
+  if (!Html && !Text) { console.log('Invalid Params'); return false; }
 
   //Preenchimento
-  if (CcAddresses)      { params.Destination.CcAddresses = CcAddresses; }
   if (ToAddresses)      { params.Destination.ToAddresses = ToAddresses; }
+  if (CcAddresses)      { params.Destination.CcAddresses = CcAddresses; }
+  if (BccAddresses)     { params.Destination.BccAddresses = BccAddresses; }
+  
   if (Subject)          { params.Message.Subject.Data = Subject; }
   if (Html)             { params.Message.Body.Html.Data = Html; }
   if (Text)             { params.Message.Body.Text.Data = Text; }
@@ -48,4 +50,4 @@ function sendSingleEmail ({ ToAddresses, CcAddresses, Subject, Html, Text, Reply
 
 module.exports = {
   sendSingleEmail,
-}
+};
