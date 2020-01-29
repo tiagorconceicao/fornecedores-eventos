@@ -4,7 +4,6 @@ const cors = require('cors');
 const { loadResolversFiles, loadSchemaFiles } = require('@graphql-modules/sonar');
 const { mergeGraphQLSchemas, mergeResolvers } = require('@graphql-modules/epoxy');
 const { resolvers } = require('./resolvers');
-
 require('./database/index');
 
 
@@ -13,6 +12,7 @@ const app = new GraphQLServer({
   resolvers,
   context: req => ({ token : req.request.get('authorization') })
 });
+
 
 app.use( cors() );
 app.start({ port: 3333 });
