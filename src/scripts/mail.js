@@ -1,7 +1,8 @@
 var AWS = require ('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
+const LogEmail = require("../models/LogEmail");
 
-function sendSingleEmail ({ ToAddresses, CcAddresses, BccAddresses, Subject, Html, Text, ReplyToAddresses, Source, SourceName }) {
+function sendSingleEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses, Subject, Html, Text, ReplyToAddresses, Source, SourceName }) {
   var params = {
     Destination: { ToAddresses: [], CcAddresses: [], BccAddresses: [] },
     Message: {
@@ -37,14 +38,44 @@ function sendSingleEmail ({ ToAddresses, CcAddresses, BccAddresses, Subject, Htm
   // Create the promise and SES service object
   var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
 
+  if ( params.Message.Subject.Data.toString() ) {
+    subject = params.Message.Subject.Data.toString();
+  } else { subject = null; }
+
+  if ( params.Destination.ToAddresses.toString() ) {
+    to_addresses = params.Destination.ToAddresses.toString();
+  } else { to_addresses = null; }
+
+  if ( params.Destination.CcAddresses.toString() ) {
+    cc_addresses = params.Destination.CcAddresses.toString();
+  } else { cc_addresses = null; }
+
+  if ( params.Destination.BccAddresses.toString() ) {
+    bcc_addresses = params.Destination.BccAddresses.toString();
+  } else { bcc_addresses = null; }
+
+  if ( params.Source.toString() ) {
+    source = params.Source.toString();
+  } else { source = null; }
+
   sendPromise.then(
-    function(data) {
+    async function(data) {
       console.log(data.MessageId);
+      await LogEmail.create({
+        user_id,
+        subject, to_addresses, cc_addresses, bcc_addresses,
+        source, message_id: data.MessageId
+      });
       return data.MessageId;
     }).catch(
-      function(err) {
-      console.error(err, err.stack);
-      return false;
+      async function(err) {
+        console.log('sendSingleEmail ERROR. Log in Database.');
+        await LogEmail.create({
+          user_id,
+          subject, to_addresses, cc_addresses, bcc_addresses,
+          source, error: err.stack.toString()
+        });
+        return false;
     });
 };
 
