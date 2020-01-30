@@ -17,7 +17,7 @@ const CompanyResolver = {
   },
 
   Mutation: {
-    createCompany: async (_,{ name, description, website, zipcode, state, city, district, street, number, complement },{token}) => {
+    createCompany: async (_,{ name, short_name, description, website, zipcode, state, city, district, street, number, complement },{token}) => {
       validateToken(token);
       const existsCompany = await Company.findOne({ where: { name } });
       if ( existsCompany ) {
@@ -25,13 +25,13 @@ const CompanyResolver = {
       }
 
       const createdCompany = await Company.create({
-        name, description, website, zipcode, state, city,
+        name, short_name, description, website, zipcode, state, city,
         district, street, number, complement
       });
       return await Company.findByPk(createdCompany.id);
     },
 
-    updateCompany: async (_,{ company_id, name, description, website, zipcode, state, city, district, street, number, complement },{token}) => {      
+    updateCompany: async (_,{ company_id, name, short_name, description, website, zipcode, state, city, district, street, number, complement },{token}) => {      
       validateToken(token);
       foundCompany = await Company.findByPk(company_id);
       if (!foundCompany) { throw new Error("Company not found"); }
@@ -44,7 +44,7 @@ const CompanyResolver = {
       }    
 
       const updatedCompany = await Company.update({
-        name, description, website, zipcode, state,
+        name, short_name, description, website, zipcode, state,
         city, district, street, number, complement
       },{
         where: {id:company_id}

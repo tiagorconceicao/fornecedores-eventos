@@ -5,13 +5,13 @@ type Query {
 
 type Mutation {
   createEvent(
-    name: String!, description: String, state: String, city: String,
+    name: String!, short_name: String, description: String, state: String, city: String,
     date_start: String, date_end: String
   ): Event
 
   updateEvent(
     event_id: ID!,
-    name: String, description: String, state: String, city: String,
+    name: String, short_name: String, description: String, state: String, city: String,
     date_start: String, date_end: String
   ): Event
 

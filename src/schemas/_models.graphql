@@ -1,6 +1,7 @@
 type Event {
   id: ID!
   name: String!
+  short_name: String
   description: String
   state: String
   city: String
@@ -23,6 +24,7 @@ type RatingField {
 type Company {
   id: ID!
   name: String!
+  short_name: String
   description: String
   website: String
   zipcode: String
