@@ -1,12 +1,11 @@
 module.exports = {
   dialect: 'mysql',
-  host: 'localhost',
-  username: 'root',
-  password: 'root',
-  database: 'fornecedores_graphql',
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
   define: {
     timestamps: true,
     underscored: true,
   },
-  logging: false
 }
