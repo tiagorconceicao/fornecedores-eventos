@@ -19,7 +19,7 @@ const EventResolver = {
   },
 
   Mutation: {
-    createEvent: async (_,{ name, description, state, city, date_start, date_end },{token}) => {
+    createEvent: async (_,{ name, short_name, description, state, city, date_start, date_end },{token}) => {
       validateToken(token);
       const existsEvent = await Event.findOne({ where: { name } });
       if ( existsEvent ) {
@@ -27,13 +27,13 @@ const EventResolver = {
       }
 
       const createdEvent = await Event.create({
-        name, description, state, city,
+        name, short_name, description, state, city,
         date_start, date_end
       });
       return await Event.findByPk(createdEvent.id);
     },
 
-    updateEvent: async (_,{ event_id, name, description, state, city, date_start, date_end },{token}) => {
+    updateEvent: async (_,{ event_id, name, short_name, description, state, city, date_start, date_end },{token}) => {
       validateToken(token);   
       foundEvent = await Event.findByPk(event_id);
       if (!foundEvent) { throw new Error("Event not found"); }
@@ -46,7 +46,7 @@ const EventResolver = {
       }      
 
       const updatedEvent = await Event.update({
-        name, description, state, city,
+        name, short_name, description, state, city,
         date_start, date_end
       },{
         where: {id:event_id}

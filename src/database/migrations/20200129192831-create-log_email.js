@@ -2,39 +2,50 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-      return queryInterface.createTable('event', {
+      return queryInterface.createTable('log_email', {
         id: {
           type: Sequelize.INTEGER,
           primaryKey:true,
           autoIncrement:true,
           allowNull: false,
         },
-        name: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
-        short_name: {
-          type: Sequelize.STRING,
+        user_id: {
+          type: Sequelize.INTEGER,
           allowNull: true,
+          references: { model: 'user', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL',
         },
-        description: {
-          type: Sequelize.STRING,
-          allowNull: true,
-        },
-        state: {
+        subject: {
           type: Sequelize.STRING,
           allowNull: true,
         },
-        city: {
+        to_addresses: {
+          type: Sequelize.TEXT,
+          allowNull: true,
+        },
+        cc_addresses: {
+          type: Sequelize.TEXT,
+          allowNull: true,
+        },
+        bcc_addresses: {
+          type: Sequelize.TEXT,
+          allowNull: true,
+        },
+        source: {
           type: Sequelize.STRING,
           allowNull: true,
         },
-        date_start: {
-          type: Sequelize.DATE,
+        attachment:{
+          type: Sequelize.STRING,
           allowNull: true,
         },
-        date_end: {
-          type: Sequelize.DATE,
+        message_id: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        error: {
+          type: Sequelize.TEXT,
           allowNull: true,
         },
         created_at: {
@@ -49,6 +60,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-      return queryInterface.dropTable('event');
+      return queryInterface.dropTable('log_email');
   }
 };

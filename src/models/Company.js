@@ -4,6 +4,7 @@ class Company extends Model {
   static init(sequelize) {
     super.init({
       name: DataTypes.STRING,
+      short_name: DataTypes.STRING,
       description: DataTypes.STRING,
       website: DataTypes.STRING,
       zipcode: DataTypes.STRING,

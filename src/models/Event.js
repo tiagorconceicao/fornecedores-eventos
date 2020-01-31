@@ -4,6 +4,7 @@ class Event extends Model {
   static init(sequelize) {
     super.init({
       name: DataTypes.STRING,
+      short_name: DataTypes.STRING,
       description: DataTypes.STRING,
       state: DataTypes.STRING,
       city: DataTypes.STRING,
