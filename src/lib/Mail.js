@@ -2,7 +2,7 @@ var AWS = require ('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
 const LogEmail = require("../models/LogEmail");
 
-function sendSingleEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses, Subject, Html, Text, ReplyToAddresses, Source, SourceName }) {
+async function sendBasicEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses, Subject, Html, Text, ReplyToAddresses, Source, SourceName }) {
   var params = {
     Destination: { ToAddresses: [], CcAddresses: [], BccAddresses: [] },
     Message: {
@@ -35,9 +35,6 @@ function sendSingleEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses, Sub
     params.Source = Name+'<'+Source+'>';
   }
 
-  // Create the promise and SES service object
-  var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
-
   if ( params.Message.Subject.Data.toString() ) {
     subject = params.Message.Subject.Data.toString();
   } else { subject = null; }
@@ -58,27 +55,30 @@ function sendSingleEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses, Sub
     source = params.Source.toString();
   } else { source = null; }
 
-  sendPromise.then(
+  // Create the promise and SES service object
+  var sendPromise = await new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise()
+  .then(
     async function(data) {
-      console.log(data.MessageId);
-      await LogEmail.create({
+      newLog = await LogEmail.create({
         user_id,
         subject, to_addresses, cc_addresses, bcc_addresses,
         source, message_id: data.MessageId
       });
+      console.log('log_email.id: '+newLog.id+' | sendBasicEmail SUCCESS');
       return data.MessageId;
     }).catch(
       async function(err) {
-        console.log('sendSingleEmail ERROR. Log in Database.');
-        await LogEmail.create({
+        newLog = await LogEmail.create({
           user_id,
           subject, to_addresses, cc_addresses, bcc_addresses,
           source, error: err.stack.toString()
         });
+        console.log('log_email.id: '+newLog.id+' | sendBasicEmail ERROR');
         return false;
     });
+    return sendPromise;
 };
 
 module.exports = {
-  sendSingleEmail,
+  sendBasicEmail,
 };

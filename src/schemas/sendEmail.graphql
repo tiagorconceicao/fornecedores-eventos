@@ -1,0 +1,7 @@
+type Mutation {
+
+  sendBasicEmail(
+    to: String!
+  ): Boolean
+
+}

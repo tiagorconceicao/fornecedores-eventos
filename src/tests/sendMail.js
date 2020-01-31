@@ -1,6 +1,6 @@
-const { sendSingleEmail } = require('./scripts/mail');
+const { sendBasicEmail } = require('./scripts/mail');
 
-sendSingleEmail({
+sendBasicEmail({
   user_id: 1,
   Subject:'Teste',
   Html: '<p>Holá mundo!</p>',
