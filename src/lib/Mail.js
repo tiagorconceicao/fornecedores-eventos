@@ -66,7 +66,7 @@ async function sendBasicEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses
         source, message_id: data.MessageId
       });
       now = moment().format('YY-MM-DD HH:mm:ss');
-      console.log('log_email.id: '+newLog.id+' | sendBasicEmail SUCCESS (at '+now+')');
+      console.log('('+now+') log_email.id: '+newLog.id+' | sendBasicEmail SUCCESS');
       return data.MessageId;
     }).catch(
       async function(err) {
@@ -76,7 +76,7 @@ async function sendBasicEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses
           source, error: err.stack.toString()
         });
         now = moment().format('YY-MM-DD HH:mm:ss');
-        console.log('log_email.id: '+newLog.id+' | sendBasicEmail ERROR (at '+now+')');
+        console.log('('+now+') log_email.id: '+newLog.id+' | sendBasicEmail ERROR');
         return false;
     });
     return sendPromise;

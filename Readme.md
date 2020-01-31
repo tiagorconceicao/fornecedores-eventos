@@ -1,7 +1,7 @@
 # FORNECEDORES - EVENTOS
 > API GraphQL destinada a armazenar Fornecedores de Serviços para Eventos.
 
-## Requisitos
+## Requisitos do sistema
 
 * NodeJs
 * MySQL
@@ -12,15 +12,15 @@
 * Criar uma cópia do arquivo __.env.example__ e renomear para __.env__ prenchendo os valores das variáveis de ambiente
 
 ## Instalação
-Instale dependências
+Instale dependências:
 ```sh
 yarn
 ```
-Crie o banco de dados
+Crie o banco de dados:
 ```sh
 yarn sequelize db:create
 ```
-Migrar tabelas do banco de dados
+Migre a tabelas para o novo banco de dados:
 ```sh
 yarn sequelize db:migrate
 ```

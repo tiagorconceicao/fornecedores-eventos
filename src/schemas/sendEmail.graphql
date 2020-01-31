@@ -1,7 +1,15 @@
 type Mutation {
 
   sendBasicEmail(
-    to: String!
+    company_name: String!
+    to_addresses: String!
+    cc_addresses: String!
+    bcc_addresses: String!
+    from: String
+    from_name: String
+    pre_subject: String
+    subject: String!
+    message: String!
   ): Boolean
 
 }
