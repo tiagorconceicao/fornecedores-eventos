@@ -1,14 +1,14 @@
 # FORNECEDORES - EVENTOS
-> API GraphQL destinada a armazenar dados __Fornecedores de Serviços__ para __Eventos__.
+> API GraphQL destinada a armazenar dados de __Fornecedores de Serviços__ para __Eventos__.
 
 ### Funções gerais
-* Sistema de Login
+* Sistema de autenticação
 * Busca fornecedores com filtro (_em desenvolvimento_)
-* Envio de Emails em massa (_em teste_)
+* Envio de emails em massa (_em teste_)
 * Banco de __Fornecedores__
   * Múltiplos contados
-  * Cidades / Estado de atuação
-  * Categorizado por __Serviços__
+  * Definição de cidades/estados de atuação
+  * Categorizado por __Serviços__ prestados
   * Lista __Eventos__ onde já participou
   * Avaliação em cada __Evento__
   * Lembretes
@@ -16,9 +16,11 @@
 * Campos de __Avaliação__ editáveis
 
 ### Características
-* Autenticação baseada em _Token_
-* Envio de Emails por _AWS SES_
-* Sistema de filas usando _BULL_
+* API GraphQL
+* Banco de dados _MySQL_ através do _Sequelize_
+* Autenticação baseada em __Token__
+* Envio de emails por __AWS SES__
+* Sistema de _job queues_ usando __BULL__
 
 ### Requisitos do sistema
 * NodeJs
@@ -49,6 +51,11 @@ Inicialize o projeto executando o script:
 yarn dev
 # 'yarn dev:server' para rodar apenas servidor
 # 'yarn dev:queue' para rodar apenas serviço fila (requer REDIS) 
+```
+
+### Painel de Queue Jobs ( _bull-board_ )
+```sh
+http://localhost:3333/admin/queues
 ```
 
 ## Projeto em desenvolvimento
