@@ -29,7 +29,10 @@ yarn sequelize db:migrate
 Inicialize o projeto executando o script:
 ```sh
 yarn dev
+# 'yarn dev:server' para rodar apenas servidor
+# 'yarn dev:queue' para rodar apenas serviço fila (requer REDIS) 
 ```
+
 
 ## Atualização (após __pull__)
 Após realizar __pull__ ou sincronizar arquivos é recomendado procurar novas dependências executando:

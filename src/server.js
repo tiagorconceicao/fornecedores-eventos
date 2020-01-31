@@ -4,10 +4,6 @@ const cors = require('cors');
 const { loadResolversFiles, loadSchemaFiles } = require('@graphql-modules/sonar');
 const { mergeGraphQLSchemas, mergeResolvers } = require('@graphql-modules/epoxy');
 const { resolvers } = require('./resolvers');
-const BullBoard = require('bull-board');
-const Queue = require('./lib/Queue');
-BullBoard.setQueues(Queue.queues.map(queue => queue.bull))
-
 require('./database/index');
 
 
@@ -17,7 +13,12 @@ const app = new GraphQLServer({
   context: req => ({ token : req.request.get('authorization') })
 });
 
+//*/Import Bull-board
+const BullBoard = require('bull-board');
+const Queue = require('./lib/Queue');
+BullBoard.setQueues(Queue.queues.map(queue => queue.bull))
 app.express.use("/admin/queues", BullBoard.UI );
+//*/
 
 app.use( cors() );
 app.start({ port: 3333 });

@@ -5,7 +5,7 @@ const moment = require('moment');
 
 async function sendBasicEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses, Subject, Html, Text, ReplyToAddresses, Source, SourceName }) {
   var params = {
-    Destination: { ToAddresses: [], CcAddresses: [], BccAddresses: [] },
+    Destination: { ToAddresses: [], CcAddresses: [], BccAddresses: [process.env.AWS_SES_DEFAULT_SOURCE] },
     Message: {
       Body: {
         Html: { Charset: 'UTF-8', Data: '<p></p>' },
@@ -22,19 +22,20 @@ async function sendBasicEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses
   if (!Html && !Text) { console.log('Invalid Params'); return false; }
 
   //Preenchimento
+  if (Source) {
+    if (SourceName) { Name = SourceName+' '; } else { Name = ''; }
+    params.Source = Name+'<'+Source+'>';
+    params.Destination.BccAddresses = [Name+'<'+Source+'>'];
+  }
+
   if (ToAddresses)      { params.Destination.ToAddresses = ToAddresses; }
   if (CcAddresses)      { params.Destination.CcAddresses = CcAddresses; }
-  if (BccAddresses)     { params.Destination.BccAddresses = BccAddresses; }
+  if (BccAddresses)     { params.Destination.BccAddresses = params.Destination.BccAddresses.concat(BccAddresses); }
   
   if (Subject)          { params.Message.Subject.Data = Subject; }
   if (Html)             { params.Message.Body.Html.Data = Html; }
   if (Text)             { params.Message.Body.Text.Data = Text; }
   if (ReplyToAddresses) { params.ReplyToAddresses = ReplyToAddresses; }
-  
-  if (Source) {
-    if (SourceName) { Name = SourceName+' '; } else { Name = ''; }
-    params.Source = Name+'<'+Source+'>';
-  }
 
   if ( params.Message.Subject.Data.toString() ) {
     subject = params.Message.Subject.Data.toString();

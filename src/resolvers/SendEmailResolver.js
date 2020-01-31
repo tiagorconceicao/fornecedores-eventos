@@ -15,7 +15,7 @@ const SendEmailResolver = {
   Mutation: {
 
     sendBasicEmail: async (_,{ company_name, to_addresses, cc_addresses, bcc_addresses, from, from_name, pre_subject, subject, message },{token}) => {
-      //validateToken(token);
+      const decoded = validateToken(token);
       
       //Repair JSONString replacing ' by "
       company_name = company_name.replace(/'/g,'"');
@@ -75,7 +75,7 @@ const SendEmailResolver = {
 
         //Add email to QUEUE
         await Queue.add('sendEmail',{
-          user_id:1,
+          user_id: decoded.id,
           send_subject, send_message, from, from_name,
           send_to_addresses, send_cc_addresses, send_bcc_addresses
         });
@@ -95,6 +95,7 @@ const SendEmailResolver = {
         now = moment().format('YY-MM-DD HH:mm:ss');
         console.log('('+now+') add sendEmail to Queue'); 
       }
+
       return true;
     },
     
