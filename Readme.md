@@ -58,6 +58,11 @@ yarn dev
 http://localhost:3333/admin/queues
 ```
 
+### Authenticate
+```sh
+mutation { authenticate (email:"root@root.com" password:"root") { token } }
+```
+
 ## Projeto em desenvolvimento
 ### Atualizações (após _git pull_ )
 Após realizar _git pull_ (sincronizar projeto) é recomendado procurar novas dependências executando:

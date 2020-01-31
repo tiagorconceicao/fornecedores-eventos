@@ -41,8 +41,8 @@ module.exports = {
         {
           id: 1,
           name: 'Master Admin',
-          email: 'root@admin.com',
-          password: 'root',
+          email: 'root@root.com',
+          password: '$2a$10$oM2Gi9AJtmNSogduH16TruIEdDqCP2eSn/KhPrewj2IIozAktHxkW', //root
           active: true,
           admin: true,
           created_at: new Date(),
