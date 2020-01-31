@@ -37,7 +37,18 @@ module.exports = {
           type: Sequelize.DATE,
           allowNull: false,
         },
-      });
+      }).then(()=>queryInterface.bulkInsert('user',[
+        {
+          id: 1,
+          name: 'Master Admin',
+          email: 'root@admin.com',
+          password: 'root',
+          active: true,
+          admin: true,
+          created_at: new Date(),
+          updated_at: new Date(),
+        }
+      ],{}));
   },
 
   down: (queryInterface, Sequelize) => {
