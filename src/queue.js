@@ -1,7 +1,4 @@
 require('./database/index');
-const { mailQueue } = require('./lib/Queue');
-const sendEmail = require('./jobs/sendEmail');
+const Queue = require('./lib/Queue');
 
-mailQueue.process( sendEmail.handle );
-
-
+Queue.process();

@@ -1,6 +1,7 @@
 var AWS = require ('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
 const LogEmail = require("../models/LogEmail");
+const moment = require('moment');
 
 async function sendBasicEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses, Subject, Html, Text, ReplyToAddresses, Source, SourceName }) {
   var params = {
@@ -64,7 +65,8 @@ async function sendBasicEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses
         subject, to_addresses, cc_addresses, bcc_addresses,
         source, message_id: data.MessageId
       });
-      console.log('log_email.id: '+newLog.id+' | sendBasicEmail SUCCESS');
+      now = moment().format('YY-MM-DD HH:mm:ss');
+      console.log('log_email.id: '+newLog.id+' | sendBasicEmail SUCCESS (at '+now+')');
       return data.MessageId;
     }).catch(
       async function(err) {
@@ -73,7 +75,8 @@ async function sendBasicEmail ({ user_id, ToAddresses, CcAddresses, BccAddresses
           subject, to_addresses, cc_addresses, bcc_addresses,
           source, error: err.stack.toString()
         });
-        console.log('log_email.id: '+newLog.id+' | sendBasicEmail ERROR');
+        now = moment().format('YY-MM-DD HH:mm:ss');
+        console.log('log_email.id: '+newLog.id+' | sendBasicEmail ERROR (at '+now+')');
         return false;
     });
     return sendPromise;

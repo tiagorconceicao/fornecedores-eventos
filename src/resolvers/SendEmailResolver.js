@@ -1,6 +1,6 @@
-const {mailQueue} = require('../lib/Queue');
+const moment = require('moment');
+const Queue = require('../lib/Queue');
 const { validateToken } = require("../middlewares/authentication");
-const { sendBasicEmail } = require('../lib/Mail');
 
 const SendEmailResolver = {
 
@@ -71,7 +71,7 @@ const SendEmailResolver = {
         } else { send_bcc_addresses = send_bcc_addresses.split(''); }
 
 
-        /*console.log('i = '+i);
+        console.log('i = '+i);
         console.log('To:');
         console.log( to_addresses[i] );
         console.log( send_to_addresses );
@@ -80,29 +80,24 @@ const SendEmailResolver = {
         console.log( send_cc_addresses );
         console.log('Bcc:');
         console.log( bcc_addresses[i] );
-        console.log( send_bcc_addresses );*/
-        //console.log('\n');
+        console.log( send_bcc_addresses );
+        console.log('\n');
 
         if ( company_name[i].toString() ) {
           var send_message = message.replace('%COMPANY_NAME%', company_name[i].toString() );
         } else { send_message = message; }
-        //console.log(send_message);
 
-        
-        //adicionar JOB
         /*
-        user_id, send_subject, send_message,
-        send_to_addresses, send_cc_addresses, send_bcc_addresses,
-        from, from_name
-        */
-       await mailQueue.add({
-        user_id:1,
-        send_subject, send_message, from, from_name,
-        send_to_addresses, send_cc_addresses, send_bcc_addresses
-       });
+        await Queue.add('sendEmail',{
+          user_id:1,
+          send_subject, send_message, from, from_name,
+          send_to_addresses, send_cc_addresses, send_bcc_addresses
+        });
 
-        now = new Date();
-        console.log('add mailQueue at '+now);
+        now = moment().format('YY-MM-DD HH:mm:ss');
+        console.log('add sendEmail to Queue (at '+now+')');
+        */
+
       }
       
       return true;
