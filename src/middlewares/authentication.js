@@ -3,9 +3,6 @@ const authSecret = process.env.AUTH_SECRET;
 
 function generateToken (params = {}) {
   return jwt.sign( params, authSecret , { expiresIn: 604800 }); // 7 days
-
-  // DEV TOKEN 1 year
-  // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTgwMjI5NTM3LCJleHAiOjE2MTE3NjU1Mzd9.72NieCgqUsB2MwoSFD5CNda3sMMmcBRim8qLuyx6LpI
 }
 
 function validateToken(rawToken) {
